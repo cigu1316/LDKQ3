@@ -2,9 +2,7 @@ from django.shortcuts import render ,redirect
 from movimientos.models import Register
 from django.views.generic import CreateView , ListView
 from datetime import datetime
-import pandas as pd
-import numpy as np
-    
+from django.db.models import Sum
 
   
 
@@ -17,6 +15,7 @@ class RegisterCreateView(CreateView):
     
     def form_valid(self, form):
         form.instance.date = datetime.now()
+        
         return super().form_valid(form)
         
               
@@ -26,13 +25,39 @@ class RegisterListView(ListView):
     model = Register
     template_name = 'list_register.html'
     context_object_name = 'registers'
-        
+    
 
-def balance(request): 
-    expenses = 0
-    income = 0
-    balance = 0
-    registers= Register.objects.all()
-    for register in registers:
+    
+    
+    
+    
+    
         
-    return render(request,'index.html', )
+def Sumar(request):
+    if request.method == 'GET':
+        registers = Register.objects.all()
+        totall = 0
+        
+        total = registers.aggregate(Sum('income'))
+        total2 = registers.aggregate(Sum('expenses'))
+        total3 = registers.aggregate(Sum('balance'))
+        
+        total = total['income__sum']
+        total2 = total2['expenses__sum']
+        total3 = total3['balance__sum']
+        
+        total3 = total - total2
+        totall = total - total2 - total3
+       
+        print(total3)
+        print(totall)
+    return render(request,'list_register.html',)
+    
+    
+    
+ 
+    
+    
+
+   
+   

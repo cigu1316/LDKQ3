@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>{% block title %}index{% endblock %}</title>
+    <title>{% block title %}/{% endblock %}</title>
 </head>
 
 
@@ -27,11 +27,8 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="/sumar/"><h5>Sumar registros</h5></a>
-                 </ul>
-                  
-                 </ul>
-                 
+                        <a class="nav-link" href="/sumar/"><h5>sumar registro</h5></a>
+                    </li>
             </div>
         </nav>
     </header>        
@@ -40,9 +37,9 @@
     
          
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>LibroDiarioKuquinIII</h1>
+        <div class="raw">
+            <div class="col-md-19">
+                <h1>Libro Diario Kuquin III</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -51,22 +48,24 @@
                             <th>Income</th>
                             <th>Expenses</th>
                             <th>Balance</th>
+                            <th>total</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for register in registers %}
                         <tr>
-                            <th scope="row"></th>
+                            
                             
                             <td>{{register.date}}</td>
                             <td>{{register.descriptions}}</td>
                             <td>{{register.income}}</td>
                             <td>{{register.expenses}}</td>
                             <td>{{register.balance}}</td>
-                            <td>
-                                
-                            </td>
+                            <td>{{register.totall}}</td>
+                            
+                           
                         </tr>
+      
                         {% endfor %}
                     </tbody>
                 </table>
