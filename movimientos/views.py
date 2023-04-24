@@ -3,7 +3,7 @@ from movimientos.models import Register
 from django.views.generic import CreateView , ListView
 from datetime import datetime
 from django.db.models import Sum
-
+import pandas as pd
   
 
 class RegisterCreateView(CreateView):
@@ -27,37 +27,19 @@ class RegisterListView(ListView):
     context_object_name = 'registers'
     
 
-    
-    
-    
-    
-    
-        
+  
 def Sumar(request):
+   
     if request.method == 'GET':
         registers = Register.objects.all()
-        totall = 0
         
-        total = registers.aggregate(Sum('income'))
+        total1 = registers.aggregate(Sum('income'))
         total2 = registers.aggregate(Sum('expenses'))
-        total3 = registers.aggregate(Sum('balance'))
-        
-        total = total['income__sum']
-        total2 = total2['expenses__sum']
-        total3 = total3['balance__sum']
-        
-        total3 = total - total2
-        totall = total - total2 - total3
        
-        print(total3)
-        print(totall)
-    return render(request,'list_register.html',)
-    
-    
-    
- 
-    
-    
-
-   
-   
+        total1 = total1['income__sum']
+        total2 = total2['expenses__sum']
+       
+        balance = total1 - total2 
+        save = Register.objects.create(balance=balance)
+        print(balance)
+    return render(request,'list_register.html',)    
